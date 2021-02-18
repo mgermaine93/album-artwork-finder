@@ -12,12 +12,14 @@ import os
 import urllib.request
 import time
 from time import sleep
+import random
 
 PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
 
 # This will eventually need to point to the actual music folder, but this will do for now.
 # Make dynamic?
 save_folder = "/Users/mgermaine93/Desktop/DMB-Album-Art"
+seconds = [1, 2, 3, 4, 5]
 
 # This creates the folder to store the image in
 if not os.path.exists(save_folder):
@@ -25,50 +27,64 @@ if not os.path.exists(save_folder):
 
 driver = webdriver.Chrome(PATH)
 
-# Goes to the given web page
-driver.get("https://www.google.com/imghp?hl=en&ogbl")
+search_terms = ["Ben Folds Five The Sound of the Live of the Mind Album Cover",
+                "Dave Matthews Crash Album Cover", "Ben Folds Songs for Silverman Album Cover",
+                "Regina Spektor Far Album Cover", "Lianne La Havas Blood Album Cover"]
 
-# "q" is the name of the google search field input
-search_bar = driver.find_element_by_name("q")
+# Initialize count.  This is used to distinguish the different artwork images
+count = 0
 
-search_term = "Ben Folds Five The Sound of the Live of the Mind Album Cover"
+for term in search_terms:
 
-# Input the search term(s)
-# This will need to be dynamic, too
-search_bar.send_keys(search_term)
+    # Goes to the given web page
+    driver.get("https://www.google.com/imghp?hl=en&ogbl")
 
-# Returns the results (basically clicks "search"?)
-search_bar.send_keys(Keys.RETURN)
+    # "q" is the name of the google search field input
+    search_bar = driver.find_element_by_name("q")
 
-# Wait 10 seconds for the images to load on the page before moving on to the next part of the script
-try:
-    # This will retrieve a list containing lots of images, but only once a "body" tag has loaded
-    search_results = WebDriverWait(driver, 10).until(
-        # Not sure if the ID will change, but it stays the same for at least three separate searches...
-        EC.presence_of_element_located((By.ID, "islrg"))
-    )
-    # print(search_results.text)
+    # Input the search term(s)
+    # This will need to be dynamic, too
+    search_bar.send_keys(term)
 
-    # Gets all of the images on the page (it should be a list)
-    images = search_results.find_elements_by_tag_name("img")
-    # print(images)
+    # Returns the results (basically clicks "search"?)
+    search_bar.send_keys(Keys.RETURN)
 
-    # Just the first result should do for now.
-    data_url = images[0].get_attribute('src')
-    print(data_url)
+    # Wait 10 seconds for the images to load on the page before moving on to the next part of the script
+    try:
+        # This will retrieve a list containing lots of images, but only once a "body" tag has loaded
+        search_results = WebDriverWait(driver, 10).until(
+            # Not sure if the ID will change, but it stays the same for at least three separate searches...
+            EC.presence_of_element_located((By.ID, "islrg"))
+        )
+        # print(search_results.text)
 
-    # (From SO post) Read the dataURL and decode it to bytes
-    with urllib.request.urlopen(data_url) as response:
-        data = response.read()
-        with open(f"{save_folder}/image.jpg", mode="wb") as f:
-            f.write(data)
+        # Gets all of the images on the page (it should be a list)
+        images = search_results.find_elements_by_tag_name("img")
+        # print(images)
 
-    # This will print if the above succeeds
-    print("Potato")
+        # Just the first result should do for now.
+        data_url = images[0].get_attribute('src')
+        # print(data_url)
 
-except:
-    print("Booger")
-    driver.quit()
+        # (From SO post) Read the dataURL and decode it to bytes
+        with urllib.request.urlopen(data_url) as response:
+            data = response.read()
+            with open(f"{save_folder}/{count}image.jpg", mode="wb") as f:
+                f.write(data)
+
+        # This will print if the above succeeds
+        print("Potato")
+
+        # Update count here
+        count += 1
+
+        # Good practice, keeps time between requests somewhat variadic
+        sleep(random.choice(seconds))
+
+    except:
+        print("Booger")
+        driver.quit()
+
 
 # Closes the browser
 driver.quit()

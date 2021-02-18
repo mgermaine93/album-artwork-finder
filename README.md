@@ -3,7 +3,7 @@
 Basic Artwork grabber is functional for now. Next big-picture steps/user stories include:
 
 - Perform the current functionality, but with:
-  - Multiple hard-coded search terms.
+  - Multiple hard-coded search terms (DONE)
   - User-inputted search term(s).
   - Search terms retrieved from a file that is provided (ultimate goal).
 - Perform the current functionality, but have the program:
