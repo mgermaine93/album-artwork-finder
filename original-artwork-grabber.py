@@ -9,7 +9,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
-import urllib
 import urllib.request
 import time
 from time import sleep
@@ -52,7 +51,7 @@ for term in search_terms:
     # Wait 10 seconds for the images to load on the page before moving on to the next part of the script
     try:
         # This will retrieve a list containing lots of images, but only once a "body" tag has loaded
-        search_results = WebDriverWait(driver, 100).until(
+        search_results = WebDriverWait(driver, 10).until(
             # Not sure if the ID will change, but it stays the same for at least three separate searches...
             EC.presence_of_element_located((By.ID, "islrg"))
         )
@@ -62,31 +61,15 @@ for term in search_terms:
         images = search_results.find_elements_by_tag_name("img")
         # print(images)
 
-        images[0].click()
-
         # Just the first result should do for now.
-        # data_url = images[0].get_attribute('src')
+        data_url = images[0].get_attribute('src')
         # print(data_url)
 
-        search_results = WebDriverWait(driver, 100).until(
-            # Not sure if the ID will change, but it stays the same for at least three separate searches...
-            EC.presence_of_element_located((By.CLASS_NAME, "n3VNCb"))
-        )
-
-        # Target the larger image once it's loaded
-        large_image = driver.find_element_by_class_name("n3VNCb")
-
-        # Target the source link
-        source = large_image.get_attribute('src')
-
-        # download the image
-        urllib.urlretrieve(source, f"{save_folder}/{count}image.jpg")
-
-        # # (From SO post) Read the dataURL and decode it to bytes
-        # with urllib.request.urlopen(data_url) as response:
-        #     data = response.read()
-        #     with open(f"{save_folder}/{count}image.jpg", mode="wb") as f:
-        #         f.write(data)
+        # (From SO post) Read the dataURL and decode it to bytes
+        with urllib.request.urlopen(data_url) as response:
+            data = response.read()
+            with open(f"{save_folder}/{count}image.jpg", mode="wb") as f:
+                f.write(data)
 
         # This will print if the above succeeds
         print("Potato")
