@@ -19,7 +19,7 @@ PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
 
 # This will eventually need to point to the actual music folder, but this will do for now.
 # Make dynamic?
-save_folder = "/Users/mgermaine93/Desktop/DMB-Album-Art"
+save_folder = "/Users/mgermaine93/Desktop/Album-Art"
 seconds = [1, 2, 3, 4, 5]
 
 # This creates the folder to store the image in
@@ -31,79 +31,49 @@ driver = webdriver.Chrome(PATH)
 search_terms = ["John Coltrane Blue Train Album Cover",
                 "The Silver Seas Chateau Revenge! Album Cover"]
 
-# Initialize count.  This is used to distinguish the different artwork images
 count = 0
 
 for term in search_terms:
 
-    # Goes to the given web page
     driver.get("https://www.google.com/imghp?hl=en&ogbl")
-
-    # "q" is the name of the google search field input
     search_bar = driver.find_element_by_name("q")
-
-    # Input the search term(s)
-    # This will need to be dynamic, too
     search_bar.send_keys(term)
-
-    # Returns the results (basically clicks "search"?)
     search_bar.send_keys(Keys.RETURN)
 
-    # Wait 10 seconds for the images to load on the page before moving on to the next part of the script
     try:
-        # This will retrieve a list containing lots of images, but only once a "body" tag has loaded
-        search_results = WebDriverWait(driver, 100).until(
-            # Not sure if the ID will change, but it stays the same for at least three separate searches...
+
+        search_results = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "islrg"))
         )
-        # print(search_results.text)
 
-        # Gets all of the images on the page (it should be a list)
         images = search_results.find_elements_by_tag_name("img")
-        # print(images)
+
+######## DIFFERENT CODE FROM ABOVE BEGINS HERE ########
 
         images[0].click()
 
-        # Just the first result should do for now.
-        # data_url = images[0].get_attribute('src')
-        # print(data_url)
-
-        search_results = WebDriverWait(driver, 100).until(
-            # Not sure if the ID will change, but it stays the same for at least three separate searches...
+        # Wait for the larger image to load
+        new_search_results = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "n3VNCb"))
         )
 
-        # Target the larger image once it's loaded
-        large_image = driver.find_element_by_class_name("n3VNCb")
+        large_image = new_search_results.find_element_by_class_name("n3VNCb")
 
-        # Target the source link
         source = large_image.get_attribute('src')
 
-        # download the image
+        # Download and save the image
         urllib.urlretrieve(source, f"{save_folder}/{count}image.jpg")
 
-        # # (From SO post) Read the dataURL and decode it to bytes
-        # with urllib.request.urlopen(data_url) as response:
-        #     data = response.read()
-        #     with open(f"{save_folder}/{count}image.jpg", mode="wb") as f:
-        #         f.write(data)
+######## DIFFERENT CODE FROM ABOVE ENDS HERE ########
 
-        # This will print if the above succeeds
-        print("Potato")
+        print("Artwork Saved")
 
-        # Update count here
         count += 1
-
-        # Good practice, keeps time between requests somewhat variadic
         sleep(random.choice(seconds))
 
     except:
-        print("Booger")
+
+        print("Error")
         driver.quit()
 
-
-# Closes the browser
 driver.quit()
-
-# https://stackoverflow.com/questions/6813704/how-to-download-an-image-using-selenium-any-version
-# CSS selector styles:  style="height: 200px; margin-left: 2px; margin-right: 1px; margin-top: -10px;"
