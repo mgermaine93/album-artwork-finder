@@ -19,6 +19,7 @@ audio = TinyTag.get(f"{song_directory}{song_name}{song_file_type}")
 # Grab the track information from the existing file
 album = audio.album
 artist = audio.artist
+print(artist)
 title = audio.title
 genre = audio.genre
 authors = audio.albumartist  # Not sure how to get this...
