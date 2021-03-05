@@ -8,8 +8,8 @@ from mutagen.flac import Picture, FLAC
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
 
-file_name = "/Users/mgermaine93/Desktop/Test-Music/03 Dylan Thomas.mp3"
-album_art = "/Users/mgermaine93/Desktop/better oblivion community center.jpg"
+file_name = "/Users/mgermaine93/Desktop/Test-Music/01 Living In The Country.mp3"
+album_art = "/Users/mgermaine93/Desktop/Album-Art/0image.jpg"
 
 # Thanks to https: // stackoverflow.com/questions/409949/how-do-you-embed-album-art-into-an-mp3-using-python
 audio = MP3(file_name, ID3=ID3)
@@ -31,7 +31,7 @@ else:
     # Need to add logic for jpg, jpeg, and png
     audio.tags.add(
         APIC(
-            encoding=3,  # 3 is for utf-8
+            # encoding=3,  # 3 is for utf-8
             mime='image/jpg',  # image/jpeg or image/png
             type=3,  # 3 is for the cover image
             desc=u'Cover',

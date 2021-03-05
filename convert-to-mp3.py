@@ -6,7 +6,7 @@ from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 
 song_directory = "/Users/mgermaine93/Desktop/Test-Music/"
-song_full_name = "03 Dylan Thomas.m4a"
+song_full_name = "01 Living In The Country.m4a"
 song_name = song_full_name[0:-4]
 song_file_type = song_full_name[-4:]
 
@@ -22,7 +22,7 @@ artist = audio.artist
 print(artist)
 title = audio.title
 genre = audio.genre
-authors = audio.albumartist  # Not sure how to get this...
+authors = audio.artist  # Not sure how to get this...
 composer = audio.composer
 year = audio.year
 
@@ -32,13 +32,13 @@ m4a_audio = AudioSegment.from_file(
 m4a_audio.export(f"{song_directory}{song_name}.mp3", format="mp3")
 
 # Make this into a function, too?
-# This assigns the n4a track field values to the new mp3
+# This assigns the m4a track field values to the new mp3
 mp3 = EasyID3(f"{song_directory}{song_name}.mp3")
 mp3['album'] = album
 mp3['title'] = title
 mp3['genre'] = genre
 mp3['artist'] = artist
-mp3['albumartist'] = composer
+mp3['albumartist'] = artist
 mp3['composer'] = composer
 mp3['date'] = year  # this one is troublesome...
 mp3.save()

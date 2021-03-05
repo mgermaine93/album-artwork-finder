@@ -37,8 +37,7 @@ service = Service(ChromeDriverManager().install())
 #   "for album in artist":
 #       # run the script below
 
-search_terms = ["Mandolin Orange Such Jubilee Album Cover", "Bon Jovi Lost Highway Album Cover",
-                "Dave Matthews Tim Reynolds Live at Luther College Album Cover"]
+search_terms = ["Summer George Winston Album Cover"]
 
 
 def get_album_artwork(search_terms):
