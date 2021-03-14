@@ -1,7 +1,6 @@
-# The purpose of this file is to convert a hard-coded media file (m4a for now) to mp3 and preserve as much original track metadata as possible (not including the album artwork).
-# This was helpful:  https://id3.org/id3v2.4.0-frames
-
 """
+Purpose of this code:
+
 If the file is not MP3:
 
 - Capture the metadata tags
@@ -37,7 +36,7 @@ track_total = mp3.track_total
 disc_number = mp3.disc
 disc_total = mp3.disc_total
 duration = mp3.duration
-print(f"This is the duration of the m4a: {duration}")
+# print(f"This is the duration of the m4a: {duration}")
 
 # This part does the conversion from m4a to mp3
 m4a_audio = AudioSegment.from_file(
@@ -58,6 +57,7 @@ EasyID3.RegisterTextKey('track total', 'TRCK')
 mp3['track total'] = f"{track_number}/{track_total}"
 EasyID3.RegisterTextKey('disc total', 'TPOS')
 mp3['disc total'] = f"{disc_number}/{disc_total}"
+
 mp3.save(v2_version=3)
 
 # Get the properties of the mp3
@@ -67,3 +67,4 @@ new_duration = new_song.duration
 print(f"This is the duration of the mp3: {new_duration}")
 
 # print(song_full_name)
+# This was helpful:  https://id3.org/id3v2.4.0-frames
