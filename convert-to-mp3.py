@@ -16,7 +16,8 @@ from mutagen.mp3 import MP3
 import mutagen
 
 song_directory = "/Users/mgermaine93/Desktop/Test-Music/"
-song_name = "03 Dylan Thomas.m4a"
+# song_name = "03 Dylan Thomas.m4a"
+song_name = "01 Dragonfly.m4a"
 song_name_minus_file_type = song_name[0:-4]
 song_file_type = song_name[-4:]
 song_full_name = f"{song_directory}{song_name}"
