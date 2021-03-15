@@ -1,5 +1,7 @@
 # Album Artwork Finder
 
+### I'm tired of manually searching for album artwork for songs in my iTunes library, and the Apple "Find Album Artwork" feature does not work for 264 items in my iTunes library as of March 2021. This project is my attempt to do better.
+
 Basic Artwork grabber is functional for now. Next big-picture steps/user stories include:
 
 - Perform the current functionality, but with:
