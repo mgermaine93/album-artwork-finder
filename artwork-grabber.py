@@ -37,7 +37,8 @@ service = Service(ChromeDriverManager().install())
 #   "for album in artist":
 #       # run the script below
 
-search_terms = ["Summer George Winston Album Cover"]
+search_terms = ["Summer George Winston Album Cover", "John Michael Looking Wolf Reibach One Heart One Spirit Album Cover",
+                "Hank Mobley Messages Album Cover", "Dua Lipa Future Nostalgia Album Cover", "Crazy Rhythm RU Crazy Album Cover"]
 
 
 def get_album_artwork(search_terms):

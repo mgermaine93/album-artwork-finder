@@ -7,7 +7,7 @@ from mutagen import File
 
 # filename = "/Users/mgermaine93/Desktop/Test-Music/03 Dylan Thomas.mp3"
 # album_art = "/Users/mgermaine93/Desktop/better oblivion community center.jpg"
-filename = "/Users/mgermaine93/Desktop/Test-Music/01 Dragonfly.mp3"
+filename = "/Users/mgermaine93/Desktop/Test-Music/01 Dragonfly.m4a"
 album_art = "/Users/mgermaine93/Desktop/looking_wolf_artwork.jpg"
 
 audio = MP3(filename, ID3=ID3)
