@@ -23,13 +23,6 @@ except KeyError:
     print("Track does not currently have album artwork")
     track = MP4(filename)
 
-    # Alternate way:
-    # covr = []
-    # artworkfile = open(album_art, "rb").read()
-    # covr.append(M4ACover(artworkfile, M4ACover.FORMAT_JPEG))
-    # track.tags['covr'] = covr
-    # track.save()
-
     # Thanks to: https://stackoverflow.com/questions/37897801/embedding-album-cover-in-mp4-file-using-mutagen
     with open(album_art, "rb") as f:
         track.tags["covr"] = [
@@ -37,3 +30,10 @@ except KeyError:
         ]
     track.save()
     print("artwork saved")
+
+    # Alternate way:
+    # covr = []
+    # artworkfile = open(album_art, "rb").read()
+    # covr.append(M4ACover(artworkfile, M4ACover.FORMAT_JPEG))
+    # track.tags['covr'] = covr
+    # track.save()

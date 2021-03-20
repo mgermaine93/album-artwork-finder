@@ -1,3 +1,9 @@
+"""
+Purpose of this file:
+- Given a search term, e.g. "album_here artist_here album cover", go out and find the album artwork
+- Save the retrieved artwork to a hardcoded folder for now.
+"""
+
 import urllib
 import random
 import os
@@ -16,6 +22,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
+
+# This will need to be update to be dynamic, I think
 save_folder = "/Users/mgermaine93/Desktop/Album-Art"
 
 driver = webdriver.Chrome(PATH)
@@ -37,8 +45,7 @@ service = Service(ChromeDriverManager().install())
 #   "for album in artist":
 #       # run the script below
 
-search_terms = ["Summer George Winston Album Cover", "John Michael Looking Wolf Reibach One Heart One Spirit Album Cover",
-                "Hank Mobley Messages Album Cover", "Dua Lipa Future Nostalgia Album Cover", "Crazy Rhythm RU Crazy Album Cover"]
+search_terms = ["Summer George Winston Album Cover"]
 
 
 def get_album_artwork(search_terms):
@@ -69,7 +76,7 @@ def get_album_artwork(search_terms):
 
             # Download and save the image
             urllib.request.urlretrieve(
-                source, f"{save_folder}/{count}image.jpg")
+                source, f"{save_folder}/{count}-image.jpg")
 
             # This will print if everything above works
             print("Artwork Saved")
