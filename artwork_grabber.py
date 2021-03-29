@@ -45,15 +45,15 @@ service = Service(ChromeDriverManager().install())
 #   "for album in artist":
 #       # run the script below
 
-search_terms = ["Summer George Winston Album Cover"]
+# search_term = ["Summer George Winston Album Cover"]
 
 
-def get_album_artwork(search_terms):
+def get_album_artwork(search_term):
 
     seconds = [1, 2, 3, 4, 5]
     count = 0
 
-    for term in search_terms:
+    for term in search_term:
         driver.get("https://www.google.com/imghp?hl=en&ogbl")
 
         # This is the name of the google search bar field
@@ -92,4 +92,4 @@ def get_album_artwork(search_terms):
     driver.quit()
 
 
-get_album_artwork(search_terms)
+# get_album_artwork(search_term)
