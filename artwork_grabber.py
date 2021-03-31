@@ -8,10 +8,6 @@ import urllib
 import random
 import os
 from time import sleep
-# These seem like promising tools to use further down the road...
-from mutagen import id3, mp3
-from mutagen.mp4 import MP4, MP4Cover
-#################################################################
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -24,7 +20,7 @@ from selenium.webdriver.common.keys import Keys
 PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
 
 # This will need to be update to be dynamic, I think
-save_folder = "/Users/mgermaine93/Desktop/Album-Art"
+save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
 driver = webdriver.Chrome(PATH)
 
@@ -39,21 +35,15 @@ optionsforchrome.add_argument('--disable-dev-shm-usage')
 optionsforchrome.add_argument('--ignore-certificate-errors')
 service = Service(ChromeDriverManager().install())
 
-# Access files here...?
-# access main home file
-# "for artist in home_file":
-#   "for album in artist":
-#       # run the script below
-
-# search_term = ["Summer George Winston Album Cover"]
-
 
 def get_album_artwork(search_term):
 
-    seconds = [1, 2, 3, 4, 5]
+    seconds = [3, 4, 5]
     count = 0
+    search_terms = []
+    search_terms.append(search_term)
 
-    for term in search_term:
+    for term in search_terms:
         driver.get("https://www.google.com/imghp?hl=en&ogbl")
 
         # This is the name of the google search bar field
@@ -75,8 +65,8 @@ def get_album_artwork(search_term):
             source = large_image.get_attribute('src')
 
             # Download and save the image
-            urllib.request.urlretrieve(
-                source, f"{save_folder}/{count}-image.jpg")
+            urllib.request.urlretrieve(source, f"{save_folder}/artwork.jpg")
+            # source, f"{save_folder}/{count}-image.jpg")
 
             # This will print if everything above works
             print("Artwork Saved")
@@ -89,7 +79,7 @@ def get_album_artwork(search_term):
             print("Error")
             driver.quit()
 
-    driver.quit()
+    # driver.quit()
 
 
-# get_album_artwork(search_term)
+# get_album_artwork(["Bill Evans For Lover album cover", "Django Unchained album cover", "Yamaha P-125B"])

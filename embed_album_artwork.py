@@ -14,7 +14,7 @@ from mutagen import File
 # album_art = "/Users/mgermaine93/Desktop/looking_wolf_artwork.jpg"
 
 
-def detect_and_embed_album_artwork(filename, album_art):
+def embed_album_artwork(filename, album_art):
 
     last_four = filename[-4:]
     print(last_four)

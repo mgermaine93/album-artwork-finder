@@ -1,7 +1,7 @@
 """
 Purpose of this file:
 - Pass in the path to a song
-- Return the name of the album the song belongs to
+- Return a string to use to search for the album cover using a search engine
 """
 
 from tinytag import TinyTag
@@ -12,7 +12,6 @@ def create_search_term(path_to_song):
     artist = tag.artist
     album = tag.album
     search_term = f"{album} {artist} Album Cover"
-    print(search_term)
     return search_term
 
 
