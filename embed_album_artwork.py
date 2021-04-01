@@ -48,6 +48,8 @@ def embed_album_artwork(filename, album_art):
         print("Filename name is not M4A nor MP3")
 
 
+embed_album_artwork(
+    "/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/03 If You Could See Me Now.m4a", "/Users/mgermaine93/Desktop/R-3061272-1313941754.jpeg.jpg")
 # detect_and_embed_album_artwork("/Users/mgermaine93/Desktop/test/04 Tribute To The Ancestors.m4a","/Users/mgermaine93/Desktop/Album-Art/looking_wolf_artwork.jpg")
 
 # detect_and_embed_album_artwork(filename)

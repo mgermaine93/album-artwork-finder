@@ -22,8 +22,6 @@ PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
 # This will need to be update to be dynamic, I think
 save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
-driver = webdriver.Chrome(PATH)
-
 if not os.path.exists(save_folder):
     os.mkdir(save_folder)
 
@@ -44,6 +42,8 @@ def get_album_artwork(search_term):
     search_terms.append(search_term)
 
     for term in search_terms:
+        # Thanks to https://python-forum.io/Thread-MaxRetryError-while-scraping-a-website-multiple-times
+        driver = webdriver.Chrome(PATH)
         driver.get("https://www.google.com/imghp?hl=en&ogbl")
 
         # This is the name of the google search bar field
@@ -79,7 +79,7 @@ def get_album_artwork(search_term):
             print("Error")
             driver.quit()
 
-    # driver.quit()
+    driver.quit()
 
 
 # get_album_artwork(["Bill Evans For Lover album cover", "Django Unchained album cover", "Yamaha P-125B"])

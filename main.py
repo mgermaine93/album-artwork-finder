@@ -1,4 +1,10 @@
-# from artwork_grabber import get_album_artwork
+"""
+Purpose of this file:
+- Loops through a directory containing artists, albums, and songs (in that order).
+- Perform the main functionality of the project.
+"""
+
+from pathlib import Path
 from create_search_term import create_search_term
 from detect_album_artwork import detect_album_artwork
 from artwork_grabber import get_album_artwork
@@ -6,23 +12,32 @@ from embed_album_artwork import embed_album_artwork
 import os
 
 root_path = "/Users/mgermaine93/Desktop/test"
+print(os.listdir(root_path))
 
-# filename = "/Users/mgermaine93/Desktop/test/04 Tribute To The Ancestors.m4a"
-# album_art = "/Users/mgermaine93/Desktop/Album-Art/looking_wolf_artwork.jpg"
-# /Users/mgermaine93/Music/iTunes/iTunes Media/Music/Metheny _ Mehldau/Quartet/01 A Night Away.m4a
-
+artists = [
+    file for file in Path(root_path).iterdir() if not file.name.startswith(".")
+]
 
 # Thanks to https://www.techiedelight.com/list-all-subdirectories-in-directory-python/
-for artist in os.listdir(root_path):
+for artist in artists:
     artist_path = os.path.join(root_path, artist)
+    print(f"artist path is here: {artist_path}")
     if os.path.isdir(artist_path):
-        # print(f"The artist is: {artist_path}")
-        for album in os.listdir(artist_path):
+        print(f"The artist is: {artist_path}")
+        albums = [
+            file for file in Path(artist_path).iterdir() if not file.name.startswith(".")
+        ]
+        for album in albums:
             album_path = os.path.join(artist_path, album)
             if os.path.isdir(album_path):
+                print(f"album path is here: {album_path}")
                 # print(f"    The album is: {album_path}")
-                for song in os.listdir(album_path):
+                songs = [
+                    file for file in Path(album_path).iterdir() if not file.name.startswith(".")
+                ]
+                for song in songs:
                     song_path = os.path.join(album_path, song)
+                    print(song_path)
                     # print(f"        The song is: {song_path}")
                     if not detect_album_artwork(song_path):
                         # Get the search term
@@ -38,14 +53,3 @@ for artist in os.listdir(root_path):
                             song_path, "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork/artwork.jpg")
 
 print("done")
-"""
-    Steps to take next here include:
-    - Check whether or not the track has album artwork
-    - Create the search term if it doesn't have album artwork
-    - Run artwork grabber to retrieve and save artwork
-    """
-
-
-# Run the artwork grabber for each song
-
-# create_search_term("/Users/mgermaine93/Desktop/test/02 Red Hawk Calling.m4a")

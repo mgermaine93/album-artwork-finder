@@ -45,6 +45,8 @@ def detect_album_artwork(filename):
         return False
 
 
+detect_album_artwork(
+    "/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/07 Lover Man.m4a")
 # if detect_album_artwork(
 #         "/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/01 For Heaven's Sake.m4a"):
 #     print("Yay")
