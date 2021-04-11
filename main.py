@@ -46,7 +46,7 @@ for artist in artists:
                         print(search_term)
                         # Retrieve an image using the search term
                         # print("Retrieving artwork")
-                        get_album_artwork(search_term)
+                        get_album_artwork(search_term, save_folder)
                         # Add the artwork to the track
                         print("Adding artwork")
                         embed_album_artwork(
