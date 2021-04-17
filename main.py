@@ -12,6 +12,7 @@ from embed_album_artwork import embed_album_artwork
 import os
 
 root_path = "/Users/mgermaine93/Desktop/test"
+save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 print(os.listdir(root_path))
 
 artists = [
@@ -52,4 +53,4 @@ for artist in artists:
                         embed_album_artwork(
                             song_path, "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork/artwork.jpg")
 
-print("done")
+print("Done!")

@@ -49,7 +49,7 @@ def get_album_artwork(search_term, save_folder):
         # This is the name of the google search bar field
         search_bar = driver.find_element(By.NAME, "q")
     except NoSuchElementException:
-        raise NoSuchElementException("No such element found!")
+        print("No such element found!")
 
     try:
         search_bar.send_keys(search_term)
@@ -57,13 +57,12 @@ def get_album_artwork(search_term, save_folder):
         search_results = WebDriverWait(driver, 10).until(ec.presence_of_element_located(
             (By.XPATH, '//a[@class="wXeWr islib nfEiy mM5pbd"]')))
     except InvalidSelectorException:
-        raise InvalidSelectorException(
-            "XPath selector is either incorrect or syntactically invalid!")
+        print("XPath selector is either incorrect or syntactically invalid!")
 
     try:
         images = search_results.find_elements(By.TAG_NAME, "img")
     except NoSuchElementException:
-        raise NoSuchElementException("No images found!")
+        print("No images found!")
 
     # Just the first image will do.
     images[0].click()
@@ -74,14 +73,12 @@ def get_album_artwork(search_term, save_folder):
             ec.presence_of_element_located((By.CLASS_NAME, "n3VNCb")))
         large_image = driver.find_element(By.CLASS_NAME, "n3VNCb")
     except NoSuchElementException:
-        raise NoSuchElementException(
-            "An element with the provided element name could not be found!")
+        print("An element with the provided element name could not be found!")
 
     try:
         source = large_image.get_attribute('src')
     except NoSuchAttributeException:
-        raise NoSuchAttributeException(
-            "An element with the provided attribute could not be found!")
+        print("An element with the provided attribute could not be found!")
 
     # Download and save the image
     # urllib.request.urlretrieve(source, f"{save_folder}/artwork.jpg")
@@ -92,7 +89,7 @@ def get_album_artwork(search_term, save_folder):
 
     # thanks to https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/
     # and https://stackoverflow.com/questions/3422262/how-can-i-take-a-screenshot-with-selenium-webdriver
-    cover.screenshot(f"{save_folder}/artwork.png")
+    cover.screenshot(f"{save_folder}/artwork.jpg")
 
     # This will print if everything above works
     print(f"Artwork for {search_term} saved.")
@@ -104,5 +101,4 @@ def get_album_artwork(search_term, save_folder):
     driver.quit()
 
 
-get_album_artwork("Ben Folds Rockin the Suburbs Album Cover",
-                  "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
+# get_album_artwork("Ben Folds Rockin the Suburbs Album Cover", "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")

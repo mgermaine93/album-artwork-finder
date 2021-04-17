@@ -38,27 +38,11 @@ def detect_album_artwork(filename):
             # print("MP3 track already has album artwork")
             return True
         except KeyError:
-            # print("MP3 track needs album artwork")
+            print("MP3 track needs album artwork")
             return False
     else:
         print("Filename name is not M4A nor MP3")
         return False
 
 
-detect_album_artwork(
-    "/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/07 Lover Man.m4a")
-# if detect_album_artwork(
-#         "/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/01 For Heaven's Sake.m4a"):
-#     print("Yay")
-# else:
-#     print("Moo")
-# detect_and_embed_album_artwork("/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/06 It Must Be Love.m4a")
-
-
-# detect_and_embed_album_artwork(filename)
-# Alternate way:
-# covr = []
-# artworkfile = open(album_art, "rb").read()
-# covr.append(M4ACover(artworkfile, M4ACover.FORMAT_JPEG))
-# track.tags['covr'] = covr
-# track.save()
+# detect_album_artwork("/Users/mgermaine93/Desktop/test/Bill Evans/For Lovers/07 Lover Man.m4a")
