@@ -55,7 +55,7 @@ def get_album_artwork(search_term, save_folder):
         search_bar.send_keys(search_term)
         search_bar.send_keys(Keys.RETURN)
         search_results = WebDriverWait(driver, 10).until(ec.presence_of_element_located(
-            (By.XPATH, '//a[@class="wXeWr islib nfEiy mM5pbd"]')))
+            (By.ID, 'islrg')))
     except InvalidSelectorException:
         print("XPath selector is either incorrect or syntactically invalid!")
 
@@ -84,12 +84,11 @@ def get_album_artwork(search_term, save_folder):
     # urllib.request.urlretrieve(source, f"{save_folder}/artwork.jpg")
 
     sleep(2)
-    cover = driver.find_element_by_xpath(
-        '//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img')
+    cover = driver.find_element_by_class_name('n3VNCb')
 
     # thanks to https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/
     # and https://stackoverflow.com/questions/3422262/how-can-i-take-a-screenshot-with-selenium-webdriver
-    cover.screenshot(f"{save_folder}/artwork.jpg")
+    cover.screenshot(f"{save_folder}/artwork.png")
 
     # This will print if everything above works
     print(f"Artwork for {search_term} saved.")
@@ -101,4 +100,5 @@ def get_album_artwork(search_term, save_folder):
     driver.quit()
 
 
-# get_album_artwork("Ben Folds Rockin the Suburbs Album Cover", "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
+get_album_artwork("Ben Folds Rockin the Suburbs Album Cover",
+                  "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
