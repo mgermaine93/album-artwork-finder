@@ -3,11 +3,12 @@ from mutagen import File
 from mutagen.id3 import ID3, APIC, error
 from mutagen.mp3 import MP3
 from pathlib import Path
+from PIL import Image, ImageChops
 
 
 def create_search_term(song):
     """
-    Takes in a file path to a song (string) and returns a phrase that will be used to search for the song's corresponding album artwork (string). 
+    Takes in a file path to a song (string) and returns a phrase that will be used to search for the song's corresponding album artwork (string).
     """
 
     album = song.Song.get_album(song)
@@ -84,3 +85,15 @@ def embed_album_artwork(song, album_art):
         mp3.save()
     else:
         print("Filename name is not M4A nor MP3")
+
+
+def compare_artwork(existing_artwork, found_artwork):
+    image1 = Image.open(existing_artwork)
+    print(image1.format, image1.size, image1.mode)
+    # image2 = Image.open(found_artwork)
+
+    # difference = ImageChops.difference(image1, image2)
+    # print(difference.getbbox())
+
+
+compare_artwork("artwork1.jpg", "artwork2.jpg")
