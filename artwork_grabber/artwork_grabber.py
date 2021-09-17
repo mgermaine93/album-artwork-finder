@@ -197,3 +197,6 @@ get_album_artwork("Ben Folds Rockin the Suburbs Album Cover",
 #                   "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
 # embed_album_artwork(
 #     song, "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork/artwork.png")
+
+
+# this might be helpful:  https://levelup.gitconnected.com/how-to-download-google-images-using-python-2021-82e69c637d59

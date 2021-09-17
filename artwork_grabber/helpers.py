@@ -4,6 +4,7 @@ from mutagen.id3 import ID3, APIC, error
 from mutagen.mp3 import MP3
 from pathlib import Path
 from PIL import Image, ImageChops
+import imagehash
 
 
 def create_search_term(song):
@@ -86,14 +87,22 @@ def embed_album_artwork(song, album_art):
     else:
         print("Filename name is not M4A nor MP3")
 
+# Thanks to https://stackoverflow.com/questions/52736154/how-to-check-similarity-of-two-images-that-have-different-pixelization
+
 
 def compare_artwork(existing_artwork, found_artwork):
-    image1 = Image.open(existing_artwork)
-    print(image1.format, image1.size, image1.mode)
-    # image2 = Image.open(found_artwork)
+    """
+    Takes in the file paths to two images (each is a string) and returns a boolean determining whether they are similar (True) or not (False).
+    """
+    hash0 = imagehash.average_hash(Image.open(existing_artwork))
+    hash1 = imagehash.average_hash(Image.open(found_artwork))
+    cutoff = 5  # maximum bits that could be difference between the hashes.
+    if hash0 - hash1 < cutoff:
+        print("Images are similar")
+        return True
+    else:
+        print("Images are not similar")
+        return False
 
-    # difference = ImageChops.difference(image1, image2)
-    # print(difference.getbbox())
 
-
-compare_artwork("artwork1.jpg", "artwork2.jpg")
+# compare_artwork("../artwork/artwork1.jpg", "../artwork/artwork3.jpg")
