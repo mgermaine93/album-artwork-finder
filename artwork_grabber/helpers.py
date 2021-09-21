@@ -15,7 +15,7 @@ def create_search_term(file_path_to_song):
     Takes in a file path to a song and returns a phrase that will be used to search for the song's corresponding album artwork.
 
     :param file_path_to_song:  a file path to an .mp3 or .m4a file.
-    :type file_path_to_song: `str`, required.
+    :type file_path_to_song: `string`, required.
 
     :return:  an object of type string that represents the search term to be used when finding album artwork for song file passed into the function.
     :rtype:  `string`.
@@ -35,7 +35,7 @@ def detect_album_artwork(file_path_to_song):
     Takes in a file path to a song and returns a boolean to determine whether or not the file already has album artwork associated with it.
 
     :param file_path_to_song:  a file path to an .mp3 or .m4a file.
-    :type file_path_to_song: `str`, required.
+    :type file_path_to_song: `string`, required.
 
     :return:  an object of type boolean that represents whether or not the song file passed into the function currently has album artwork associated with it.  `True` indicates that artwork is already associated with the song, whereas `False` indicates that artwork is not already associated with the song.
     :rtype:  `boolean`.
@@ -78,9 +78,9 @@ def embed_album_artwork(file_path_to_song, file_path_to_image):
     Takes in a file path to a song AND a file path to an image and saves the image as the album artwork to the song.
 
     :param file_path_to_song:  a file path to an .mp3 or .m4a file.
-    :type file_path_to_song: `str`, required.
+    :type file_path_to_song: `string`, required.
     :param file_path_to_image:  a file path to an image.
-    :type file_path_to_image: `str`, required.
+    :type file_path_to_image: `string`, required.
 
     :return:  an object of type boolean that represents whether or not the image was successfully saved as the album artwork to a song file.  `True` indicates that the image was successfully saved, whereas `False` indicates that the image was not successfully saved.
     :rtype:  `boolean`.
