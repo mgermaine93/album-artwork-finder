@@ -20,7 +20,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, NoSuchAttributeException, InvalidSelectorException
 import requests
 from PIL import Image
-from helpers import create_search_term, detect_album_artwork, embed_album_artwork
 
 
 PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
@@ -41,9 +40,6 @@ service = Service(ChromeDriverManager().install())
 
 
 def get_album_artwork(search_term, save_folder):
-    """
-    Need to add help text and looping feature to this next, so that multiple songs and images can be worked with.
-    """
 
     seconds = [3, 4, 5]
     count = 0
@@ -98,21 +94,20 @@ def get_album_artwork(search_term, save_folder):
         (By.CSS_SELECTOR, '.n3VNCb')))
     sleep(random.choice(seconds))
     source = large_image.get_attribute("src")
-    urllib.request.urlretrieve(
-        source, f"{save_folder}/new_artwork_{count}.jpeg")
+    urllib.request.urlretrieve(source, f"{save_folder}/new_artwork.png")
 
     # This will print if everything above works
     print(f"Artwork for {search_term} saved.")
-    # count += 1
+    count += 1
 
     # Good practice, slows down the WebDriver
     sleep(random.choice(seconds))
 
     driver.quit()
-    return f"{save_folder}/new_artwork_{count}.jpeg"
 
 
-# get_album_artwork("Ben Folds Rockin the Suburbs Album Cover", "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
+get_album_artwork("Ben Folds Rockin the Suburbs Album Cover",
+                  "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork")
 
 # # large_image.click()
 # # print("Large image was found and clicked.")

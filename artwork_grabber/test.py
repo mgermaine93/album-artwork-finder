@@ -1,26 +1,13 @@
-from bs4 import BeautifulSoup
-from selenium import webdriver
+from helpers import create_search_term, detect_album_artwork, embed_album_artwork
+from artwork_grabber import get_album_artwork
 
-import os
-from urllib.parse import urlparse
+song = "/Users/mgermaine93/Desktop/01 Up All Night.m4a"
+save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
-url = 'https://image.rakuten.co.jp/azu-kobe/cabinet/hair1/hb-30-pp1.jpg'
+search_term = create_search_term(song)
 
-filename = os.path.basename(urlparse(url).path)
-# change file extension to .png
-filename_png = os.path.splitext(filename)[0] + '.png'
-
-opts = webdriver.ChromeOptions()
-opts.headless = True
-driver = webdriver.Chrome(options=opts)
-
-driver.get(url)
-
-# Get the width and height of the image
-soup = BeautifulSoup(driver.page_source, 'lxml')
-width = soup.find('img')['width']
-height = soup.find('img')['height']
-
-# driver.set_window_size(int(width), int(height))
-driver.set_window_size(width, height)
-driver.save_screenshot(filename_png)
+if not detect_album_artwork(song):
+    file_path_to_artwork = get_album_artwork(search_term, save_folder)
+    embed_album_artwork(song, file_path_to_artwork)
+else:
+    print("Something done messed up...")
