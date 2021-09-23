@@ -10,11 +10,14 @@ file_path_to_songs = "/Users/mgermaine93/Desktop/Test-Music"
 save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
 with os.scandir(file_path_to_songs) as songs:
+
+    count = 0
+
+    # this currently works for a single directory of tracks, e.g., an album.
+    # will need to update so that it works for directories containing other directories, e.g., other albums AS WELL AS stand-alone tracks.
     for song in songs:
         file_type = Path(song).suffix.lower()
         if (file_type == ".m4a" or file_type == ".mp3") and song.is_file():
-
-            count = 0
 
             search_term = create_search_term(song.path)
 
@@ -25,7 +28,8 @@ with os.scandir(file_path_to_songs) as songs:
                 count += 1
             else:
                 print("Something done messed up...")
+                continue
 
-            print(f"{count} should be 14.")
+    print(f"{count} should be 10.")
 
 print("Success, I think.")

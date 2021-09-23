@@ -41,11 +41,15 @@ def get_album_artwork(search_term, save_folder):
     # This will need to be update to be dynamic, I think
     # save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
+    # creates the save_folder if it doesn't already exist
     if not os.path.exists(save_folder):
         os.mkdir(save_folder)
 
+    # uses previously found album artwork so as to prevent redundant scraping
+    if os.path.exists(f"{save_folder}/{search_term}_new_artwork.jpeg"):
+        return f"{save_folder}/{search_term}_new_artwork.jpeg"
+
     seconds = [3, 4, 5]
-    # count = 0
 
     # Thanks to https://python-forum.io/Thread-MaxRetryError-while-scraping-a-website-multiple-times
     driver = webdriver.Chrome(PATH)
@@ -97,21 +101,17 @@ def get_album_artwork(search_term, save_folder):
         (By.CSS_SELECTOR, '.n3VNCb')))
     sleep(random.choice(seconds))
     source = large_image.get_attribute("src")
-    ###### This simply deletes existing artwork that may be valid for other songs in the same album.  Will likely re-work this somehow later on to make it more efficient. ######
-    if os.path.exists(f"{save_folder}/{search_term}_new_artwork.jpeg"):
-        os.remove(f"{save_folder}/{search_term}_new_artwork.jpeg")
     urllib.request.urlretrieve(
         source, f"{save_folder}/{search_term}_new_artwork.jpeg")
-    ##########################################################################################
 
     # This will print if everything above works
     print(f"Artwork for {search_term} saved.")
-    # count += 1
 
     # Good practice, slows down the WebDriver
     sleep(random.choice(seconds))
 
     driver.quit()
+
     return f"{save_folder}/{search_term}_new_artwork.jpeg"
 
 

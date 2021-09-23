@@ -63,3 +63,7 @@ class Song:
 
     def get_year(self):
         return TinyTag.get(self.file_path_to_song).year
+
+
+# tag = TinyTag.get('/Users/mgermaine93/Desktop/01 Up All Night.m4a')
+# print(tag)
