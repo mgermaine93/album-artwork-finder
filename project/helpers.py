@@ -7,7 +7,8 @@ from PIL import Image, ImageChops
 import imagehash
 import os.path
 from os import path
-from song import Song
+from project.song import Song
+from tinytag import TinyTag
 
 
 def create_search_term(file_path_to_song):
@@ -21,9 +22,11 @@ def create_search_term(file_path_to_song):
     :rtype:  `string`.
     """
     if str(path.isfile(file_path_to_song)):
-        song = Song(file_path_to_song)
-        album = song.get_album()
-        artist = song.get_artist()
+        song = TinyTag.get(file_path_to_song)
+        print(song)
+        album = song.album()
+        print(album)
+        artist = song.artist()
         term = f"{artist} {album} Album Cover"
         return term
     else:
@@ -140,3 +143,6 @@ def compare_artwork(existing_artwork, found_artwork):
 
 # detect_album_artwork("/Users/mgermaine93/Desktop/03 Dylan Thomas.m4a")
 # compare_artwork("../artwork/artwork1.jpg", "../artwork/artwork3.jpg")
+# create_search_term("/Users/mgermaine93/Desktop/02 Shoot To Thrill.m4a")
+# create_search_term(
+#     "/Users/mgermaine93/Desktop/Test-Music/Dire Straits/Sultans Of Swing_ The Very Best Of Dire Straits/1-12 Calling Elvis.m4a")

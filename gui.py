@@ -1,49 +1,71 @@
 ###### THIS IS A SAMPLE GUI ######
+
+# Make a generally nice-looking GUI for the user (welcome screen, etc.).
+# Have the GUI ask the user to direct the application to the folder where their music files live.
+# Somehow store the music location as a value to use in the artwork grabber scripts themselves
+
+### Features to include ###
+
+# General welcome text
+# Dynamic progress bar as artwork is found and added...?
+# Logo?
+# Asks the user for where their music library is/what file(s) they want artwork added to.
+#
+
 # https://www.geeksforgeeks.org/file-explorer-in-python-using-tkinter/
 
 # EVERYTHING is a WIDGET in Tkinter
 from tkinter import *
+from tkinter import ttk
 from tkinter import filedialog
-from PIL import ImageTk, Image
 
-# creates the main "window" widget
-root = Tk()
+# creates the main "widget" window
+gui = Tk()
+gui.geometry("400x400")
+gui.title("Album Artwork Grabber")
 
-root.title("Matt's Image Viewer")
-
-
-def open():
-    global my_image
-    root.filename = filedialog.askopenfilename(initialdir="/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork/",
-                                               title="Please select a file", filetypes=(("JPG files", "*.jpg"), ("JPEG files", "*.jpeg"), ("PNG files", "*.png"), ("All files", "*.*")))
-    my_label = Label(root, text=root.filename).pack()
-    my_image = ImageTk.PhotoImage(Image.open(root.filename))
-    my_image_label = Label(image=my_image).pack()
+# creates a reusable class that contains all the properties and functions for selecting a folder
 
 
-my_button = Button(root, text="Open File", command=open).pack()
+class FolderSelect(Frame):
+    def __init__(self, parent=None, folderDescription="", **kw):
+        Frame.__init__(self, master=parent, **kw)
+        self.folderPath = StringVar()  # automatically updates fields
+        self.lblName = Label(self, text=folderDescription)
+        self.lblName.grid(row=0, column=0)
+        self.entPath = Entry(self, textvariable=self.folderPath)
+        self.entPath.grid(row=0, column=1)
+        self.btnFind = ttk.Button(
+            self, text="Browse Folder", command=self.setFolderPath)
+        self.btnFind.grid(row=0, column=2)
 
-root.mainloop()
+    def setFolderPath(self):
+        folder_selected = filedialog.askdirectory()
+        self.folderPath.set(folder_selected)
+
+    @property
+    def folder_path(self):
+        return self.folderPath.get()
 
 
-# e = Entry(root, width=50, bg="green", fg="black")
-# e.pack()
+def doStuff():
+    folder1 = directory1Select.folder_path
+    folder2 = directory2Select.folder_path
+    print("Doing stuff with folder", folder1, folder2)
 
 
-# def myClick():
-#     myLabel = Label(root, text=f"Hello, {e.get()}")
-#     myLabel.pack()
+folderPath = StringVar()
+
+directory1Select = FolderSelect(gui, "Select your music library")
+directory1Select.grid(row=0)
+
+directory2Select = FolderSelect(
+    gui, "Select where you want album artwork stored")
+directory2Select.grid(row=1)
+
+c = ttk.Button(gui, text="find", command=doStuff)
+c.grid(row=4, column=0)
+gui.mainloop()
 
 
-# # # CREATES a label widget within the "root" widget
-# # myOtherLabel = Label(root, text="Yo!!!")
-# myButton = Button(root, text="Please enter your name:  ", command=myClick)
-
-
-# # PUTS the label widget on the screen
-# # myLabel.pack()
-# # myLabel.grid(row=0, column=0)
-# # myOtherLabel.grid(row=1, column=1)
-# myButton.pack()
-
-# root.mainloop()
+# https: // stackoverflow.com/questions/51877124/how-to-select-a-directory-and-store-it-into-a-variable-in-tkinter/51877299
