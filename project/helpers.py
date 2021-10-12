@@ -24,9 +24,9 @@ def create_search_term(file_path_to_song):
     if str(path.isfile(file_path_to_song)):
         song = TinyTag.get(file_path_to_song)
         print(song)
-        album = song.album()
+        album = song.album
         print(album)
-        artist = song.artist()
+        artist = song.artist
         term = f"{artist} {album} Album Cover"
         return term
     else:

@@ -24,6 +24,7 @@ with os.scandir(file_path_to_music_library) as music_library:
         print(f"Artist path is here: {artist_path}")
 
         if os.path.isdir(artist_path):
+            # albums
             albums = [
                 album for album in Path(artist_path).iterdir() if not album.name.startswith(".")
             ]
@@ -33,6 +34,7 @@ with os.scandir(file_path_to_music_library) as music_library:
 
                 if os.path.isdir(album_path):
                     print(f"    Album path is here: {album_path}")
+                    # songs
                     songs = [
                         song for song in Path(album_path).iterdir() if not song.name.startswith(".")
                     ]
