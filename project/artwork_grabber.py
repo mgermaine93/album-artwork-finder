@@ -14,6 +14,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, NoSuchAttributeException, InvalidSelectorException
 import requests
 from PIL import Image
+from urllib import request
+import requests
 
 
 PATH = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/chromedriver"
@@ -101,8 +103,13 @@ def get_album_artwork(search_term, save_folder):
         (By.CSS_SELECTOR, '.n3VNCb')))
     sleep(random.choice(seconds))
     source = large_image.get_attribute("src")
-    urllib.request.urlretrieve(
-        source, f"{save_folder}/{search_term}_new_artwork.jpeg")
+    # https: // stackoverflow.com/questions/34957748/http-error-403-forbidden-with-urlretrieve
+    # https://stackoverflow.com/questions/45358126/http-error-403-forbidden-while-downloading-file-using-urllib
+    r = requests.get(source)
+    with open(f"{save_folder}/{search_term}_new_artwork.jpeg", 'wb') as image:
+        image.write(r.content)
+    # urllib.request.urlretrieve(
+    #     source, f"{save_folder}/{search_term}_new_artwork.jpeg")
 
     # This will print if everything above works
     print(f"Artwork for {search_term} saved.")
