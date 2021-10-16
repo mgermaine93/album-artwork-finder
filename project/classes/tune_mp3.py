@@ -16,7 +16,7 @@ class MP3Tune(Tune):
     def __init__(self, file_path_to_song):
         self.file_path_to_song = file_path_to_song
 
-    def detect_album_artwork(self):
+    def has_album_artwork(self):
         """
         Takes in a file path to a song and returns a boolean to determine whether or not the file already has album artwork associated with it.
 
@@ -27,13 +27,13 @@ class MP3Tune(Tune):
         :rtype:  `boolean`.
         """
         try:
-            mp3 = MP3(file_path_to_song, ID3=ID3)
+            mp3 = MP3(self.file_path_to_song, ID3=ID3)
             tags = mp3.tags
             tags['covr']
-            print("MP3 track has album artwork")
+            # print("MP3 track has album artwork")
             return True
         except KeyError:
-            print("MP3 track needs album artwork")
+            # print("MP3 track needs album artwork")
             return False
 
     def embed_album_artwork(self, file_path_to_image):
@@ -50,7 +50,7 @@ class MP3Tune(Tune):
         """
 
         # Thanks to https://stackoverflow.com/questions/409949/how-do-you-embed-album-art-into-an-mp3-using-python
-        mp3 = MP3(file_path_to_song, ID3=ID3)
+        mp3 = MP3(self.file_path_to_song, ID3=ID3)
         try:
             mp3.tags.add(
                 APIC(
@@ -62,10 +62,10 @@ class MP3Tune(Tune):
                 )
             )
             mp3.save()
-            print("Artwork saved.")
+            # print("Artwork saved.")
             return True
         except Exception:
-            print("Artwork was not added.")
+            # print("Artwork was not added.")
             return False
 
 

@@ -11,7 +11,7 @@ class M4ATune(Tune):
     def __init__(self, file_path_to_song):
         self.file_path_to_song = file_path_to_song
 
-    def detect_album_artwork(self):
+    def has_album_artwork(self):
         """
         Takes in a file path to a song and returns a boolean to determine whether or not the file already has album artwork associated with it.
 
@@ -24,12 +24,12 @@ class M4ATune(Tune):
         try:
             m4a = MP4(self.file_path_to_song)
             tags = m4a.tags
-            print(tags)
+            # print(tags)
             tags['covr']
-            print("M4a track has album artwork")
+            # print("M4a track has album artwork")
             return True
         except KeyError:
-            print("M4A track needs album artwork")
+            # print("M4A track needs album artwork")
             return False
 
     def embed_album_artwork(self, file_path_to_image):
@@ -45,7 +45,7 @@ class M4ATune(Tune):
         :rtype:  `boolean`.
         """
 
-        m4a = MP4(file_path_to_song)
+        m4a = MP4(self.file_path_to_song)
 
         # Thanks to: https://stackoverflow.com/questions/37897801/embedding-album-cover-in-mp4-file-using-mutagen
         try:
@@ -54,16 +54,16 @@ class M4ATune(Tune):
                     MP4Cover(f.read(), imageformat=MP4Cover.FORMAT_JPEG)
                 ]
                 m4a.save()
-                print("Artwork saved")
+                # print("Artwork saved")
                 return True
         except Exception:
-            print("Artwork was not added.")
+            # print("Artwork was not added.")
             return False
 
 
-m4a = M4ATune(
-    "/Users/mgermaine93/Downloads/Phoebe Bridgers - Punisher/Phoebe Bridgers - Punisher - 06 Chinese Satellite.mp3")
+# m4a = M4ATune(
+#     "/Users/mgermaine93/Downloads/Phoebe Bridgers - Punisher/Phoebe Bridgers - Punisher - 06 Chinese Satellite.mp3")
 
-# m4a.create_search_term()
-# m4a.detect_album_artwork()
-# m4a.embed_album_artwork()
+# # m4a.create_search_term()
+# # m4a.detect_album_artwork()
+# # m4a.embed_album_artwork()

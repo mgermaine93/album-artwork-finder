@@ -43,14 +43,14 @@ class Tune():
         return term
 
     def get_file_type(self):
-        file_type = Path(self.file_path_to_song).suffix
+        file_type = Path(self.file_path_to_song).suffix.lower()
         return file_type
 
 
-song = Tune("/Users/mgermaine93/Desktop/Test-Music/Marvin Gaye & Tammi Terrell/20th Century Masters_ The Millennium Collection - The Best Of Marvin Gaye & Tammi Terrell/02 Ain't No Mountain High Enough.m4a")
+# song = Tune("/Users/mgermaine93/Desktop/Test-Music/Marvin Gaye & Tammi Terrell/20th Century Masters_ The Millennium Collection - The Best Of Marvin Gaye & Tammi Terrell/02 Ain't No Mountain High Enough.M4a")
 
-# print(song.is_file())
-# print(song.create_search_term())
+# # print(song.is_file())
+# # print(song.create_search_term())
 # print(song.get_file_type())
 
 

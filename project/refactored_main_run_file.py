@@ -4,37 +4,107 @@ from project.helpers import create_search_term, detect_album_artwork, embed_albu
 from project.artwork_grabber import get_album_artwork
 import os
 from pathlib import Path
+from project.classes.tune import Tune
+from project.classes.tune_mp3 import MP3Tune
+from project.classes.tune_m4a import M4ATune
+
 
 # file_path_to_music_library = "/Users/mgermaine93/Desktop/Test-Music"
-file_path_to_music_library = "/Users/mgermaine93/Desktop/Test-Music/Marvin Gaye & Tammi Terrell/20th Century Masters_ The Millennium Collection - The Best Of Marvin Gaye & Tammi Terrell"
+file_path_to_music_library = "/Users/mgermaine93/Desktop/Test-Music/"
 file_path_to_songs = "/Users/mgermaine93/Desktop/Test-Music"
 save_folder = "/Users/mgermaine93/Desktop/CODE/album-artwork-finder/artwork"
 
 # iTunes Media is stored ARIST > ALBUM > SONG
 
+# https://stackoverflow.com/questions/10377998/how-can-i-iterate-over-files-in-a-given-directory
 
-def get_artists(file_path):
-    artists = [
-        artist for artist in Path(file_path).iterdir() if os.path.isdir(artist)
-    ]
-    print(artists[0])
+# returns a list of filepaths to songs
 
 
-def get_albums(file_path):
-    albums = [
-        album for album in Path(file_path).iterdir() if os.path.isdir(album)
-    ]
-    print(albums[0])
+def find_music(file_path_to_music_library):
+    song_collection = []
+    for subdir, dirs, files in os.walk(file_path_to_music_library):
+        for file in files:
+            # print os.path.join(subdir, file)
+            filepath = subdir + os.sep + file
+
+            if filepath.endswith(".mp3") or filepath.endswith(".m4a"):
+                # print(filepath)
+                song_collection.append(filepath)
+    return song_collection
 
 
-def get_songs(file_path):
-    songs = [
-        song for song in Path(file_path).iterdir() if os.path.isfile(song)
-    ]
-    print(songs[0])
+def main_run_file(songs):
+    for file in range(len(songs)):
+        # need to check the save_folder to see if artwork image is already there
+        song = Tune(songs[file])
+        search_term = song.create_search_term()
+        image = f"{save_folder}{search_term}_new_artwork.jpeg"
+
+        if song.get_file_type() == ".m4a":
+            song = M4ATune(songs[file])
+            # if the file doesn't have album artwork
+            if not song.has_album_artwork():
+                # if the artwork is already saved
+                if Path(image).is_file():
+                    # simply embed the artwork
+                    song.embed_album_artwork(image)
+                else:
+                    # otherwise, retrieve the artwork and save it to the file
+                    image = get_album_artwork(search_term, save_folder)
+                    song.embed_album_artwork(image)
+            else:
+                print("Song already has artwork")
+                continue
+
+        elif song.get_file_type() == ".mp3":
+            song = MP3Tune(songs[file])
+            # if the file doesn't have album artwork
+            if not song.has_album_artwork():
+                # if the artwork is already saved
+                if Path(image).is_file():
+                    # simply embed the artwork
+                    song.embed_album_artwork(image)
+                else:
+                    # otherwise, retrieve the artwork and save it to the file
+                    image = get_album_artwork(search_term, save_folder)
+                    song.embed_album_artwork(image)
+            else:
+                print("Song already has artwork")
+                continue
+
+        else:
+            print("Song is not a valid file type")
+            pass
+
+        print("Done")
 
 
-get_songs(file_path_to_music_library)
+songs = songs = find_music(file_path_to_music_library)
+main_run_file(songs)
+
+# checks the saved artwork folder to see if artwork already exists
+
+# pass
+# def get_artists(file_path):
+#     artists = [
+#         artist for artist in Path(file_path).iterdir() if os.path.isdir(artist)
+#     ]
+#     print(artists[0])
+
+# def get_albums(file_path):
+#     albums = [
+#         album for album in Path(file_path).iterdir() if os.path.isdir(album)
+#     ]
+#     print(albums[0])
+
+# def get_songs(file_path):
+#     songs = [
+#         song for song in Path(file_path).iterdir() if os.path.isfile(song)
+#     ]
+#     print(songs[0])
+
+# get_songs(file_path_to_music_library)
 #     for artist in artists:
 #         artist_path = os.path.join(file_path_to_music_library, artist)
 #         print(artist_path)
@@ -46,7 +116,6 @@ get_songs(file_path_to_music_library)
 #     else:
 #         print("Not a real directory!")
 #         return False
-
 
 # def get_artist_paths(file_path_to_music_library):
 #     artist_paths = [
@@ -76,7 +145,6 @@ get_songs(file_path_to_music_library)
 
 #     if os.path.isdir(album_path):
 #         pass
-
 
 # songs = [
 #     song for song in Path(album_path).iterdir() if not song.name.startswith(".")
