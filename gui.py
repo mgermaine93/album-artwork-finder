@@ -36,7 +36,7 @@ class FolderSelect(Frame):
         self.entPath = Entry(self, textvariable=self.folderPath)
         self.entPath.grid(row=0, column=1)
         self.btnFind = ttk.Button(
-            self, text="Browse Folder", command=self.setFolderPath)
+            self, text="Select a Folder", command=self.setFolderPath)
         self.btnFind.grid(row=0, column=2)
 
     def setFolderPath(self):

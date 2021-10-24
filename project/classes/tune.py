@@ -15,10 +15,10 @@ class Tune():
 
     def is_file(self):
         if path.isfile(self.file_path_to_song):
-            print("Yep, it's a file.")
+            # print("Yep, it's a file.")
             return True
         else:
-            print("Nope, not a file.")
+            # print("Nope, not a file.")
             return False
 
     def get_artist(self):
