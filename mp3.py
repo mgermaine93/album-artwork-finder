@@ -1,4 +1,4 @@
-from project.classes.tune import Tune
+from song import Song
 from mutagen import File
 from mutagen.id3 import ID3, APIC, error
 from mutagen.mp3 import MP3
@@ -11,10 +11,23 @@ from os import path
 # embedding album artwork
 
 
-class MP3Tune(Tune):
+class MP3Song(Song):
 
     def __init__(self, file_path_to_song):
-        self.file_path_to_song = file_path_to_song
+        super().__init__(file_path_to_song)
+        # self.file_path_to_song = file_path_to_song
+
+    def pict_test(self):
+        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
+        try:
+            x = self.file_path_to_song.pictures
+            if x:
+                return True
+        except Exception:
+            pass
+            if 'covr' in self.file_path_to_song or 'APIC:' in self.file_path_to_song:
+                return True
+            return False
 
     def has_album_artwork(self):
         """
@@ -69,8 +82,25 @@ class MP3Tune(Tune):
             return False
 
 
-mp3 = MP3Tune("/Users/mgermaine93/Desktop/Test-Music/Marvin Gaye & Tammi Terrell/20th Century Masters_ The Millennium Collection - The Best Of Marvin Gaye & Tammi Terrell/02 Ain't No Mountain High Enough.m4a")
+# mutagen can automatically detect format and type of tags
+file = File("/Users/mgermaine93/Desktop/test-music-folder/2-10 Granny.mp3")
+# artwork = file.tags['APIC:'].data  # access APIC frame and grab the image
+# with open('image.jpg', 'wb') as img:
+#     # img.write(artwork)  # write artwork to new image
+#     print(img.read())
 
-# mp3.create_search_term()
-# mp3.detect_album_artwork()
-# mp3.embed_album_artwork()
+
+def pict_test(audio):
+    # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
+    try:
+        x = audio.pictures
+        if x:
+            return True
+    except Exception:
+        pass
+        if 'covr' in audio or 'APIC:' in audio:
+            return True
+        return False
+
+
+# print(pict_test(file))

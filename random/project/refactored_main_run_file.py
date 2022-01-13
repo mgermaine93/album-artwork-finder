@@ -4,9 +4,9 @@ from project.helpers import create_search_term, detect_album_artwork, embed_albu
 from project.artwork_grabber import get_album_artwork
 import os
 from pathlib import Path
-from project.classes.tune import Tune
-from project.classes.tune_mp3 import MP3Tune
-from project.classes.tune_m4a import M4ATune
+from project.classes.song import Tune
+from project.classes.mp3 import MP3Tune
+from project.classes.m4a import M4ATune
 
 
 # file_path_to_music_library = "/Users/mgermaine93/Desktop/Test-Music"

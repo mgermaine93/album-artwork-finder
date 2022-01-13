@@ -1,7 +1,7 @@
 from tune import Tune
 import os
 from tinytag import TinyTag
-from project.classes.tune import Tune
+from project.classes.song import Tune
 import unittest
 
 

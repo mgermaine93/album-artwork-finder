@@ -1,4 +1,4 @@
-from project.classes.tune import Tune
+from song import Song
 from mutagen.mp4 import MP4, MP4Cover
 
 # What verbs/methods are specific to M4As?
@@ -6,10 +6,23 @@ from mutagen.mp4 import MP4, MP4Cover
 # embedding album artwork
 
 
-class M4ATune(Tune):
+class M4ASong(Song):
 
     def __init__(self, file_path_to_song):
-        self.file_path_to_song = file_path_to_song
+        super().__init__(file_path_to_song)
+        # self.file_path_to_song = file_path_to_song
+
+    def pict_test(self):
+        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
+        try:
+            x = self.file_path_to_song.pictures
+            if x:
+                return True
+        except Exception:
+            pass
+            if 'covr' in self.file_path_to_song or 'APIC:' in self.file_path_to_song:
+                return True
+            return False
 
     def has_album_artwork(self):
         """

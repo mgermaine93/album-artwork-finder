@@ -8,7 +8,7 @@ from pathlib import Path
 # The file type.
 # The search term that should be used to retrieve the album artwork.
 
-class Tune():
+class Song():
 
     def __init__(self, file_path_to_song):
         self.file_path_to_song = file_path_to_song
