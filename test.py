@@ -1,6 +1,8 @@
+# TEST FILE (used to test/print out output of different functions, etc.)
+
 from song import Song
 from m4a import M4ASong
-from mp3 import MP3Song, pict_test
+from mp3 import MP3Song
 
 mp3_with_artwork = MP3Song(
     "/Users/mgermaine93/Desktop/test-music-folder/2-10 Granny.mp3")
@@ -11,47 +13,50 @@ m4a_with_artwork = M4ASong(
 m4a_without_artwork = M4ASong(
     "/Users/mgermaine93/Desktop/test-music-folder/06 Lonely Woman.m4a")
 
-# MP3 with artwork testing
-print("Testing an MP3 with artwork...")
-print(mp3_with_artwork.is_file())
-print(mp3_with_artwork.get_artist())
-print(mp3_with_artwork.get_album())
-print(mp3_with_artwork.create_search_term())
-print(mp3_with_artwork.get_file_type())
-print("############")
-print(mp3_with_artwork.has_album_artwork())
-print(mp3_with_artwork.pict_test())
+# # MP3 with artwork testing
+# print("Testing an MP3 with artwork...")
+# # print(mp3_with_artwork.is_file())
+# # print(mp3_with_artwork.get_artist())
+# # print(mp3_with_artwork.get_album())
+# print(mp3_with_artwork.create_search_term())
+# print(mp3_with_artwork.get_file_type())
+# print("############")
+# print(f"Has Album Artwork Results: {mp3_with_artwork.has_album_artwork()}")
+# # print(f"Pict Test Results: {mp3_with_artwork.pict_test()}")
+# print("############")
 
-# MP3 without artwork testing
-print("Testing an MP3 without artwork...")
-print(mp3_without_artwork.is_file())
-print(mp3_without_artwork.get_artist())
-print(mp3_without_artwork.get_album())
-print(mp3_without_artwork.create_search_term())
-print(mp3_without_artwork.get_file_type())
-print("############")
-print(mp3_without_artwork.has_album_artwork())
-print(mp3_without_artwork.pict_test())
+
+# # MP3 without artwork testing
+# print("Testing an MP3 without artwork...")
+# # print(mp3_without_artwork.is_file())
+# # print(mp3_without_artwork.get_artist())
+# # print(mp3_without_artwork.get_album())
+# print(mp3_without_artwork.create_search_term())
+# print(mp3_without_artwork.get_file_type())
+# print("############")
+# print(f"Has Album Artwork Results: {mp3_without_artwork.has_album_artwork()}")
+# # print(f"Pict Test Results: {mp3_without_artwork.pict_test()}")
+# print("############")
 
 
 # M4A with artwork testing
 print("Testing an M4A with artwork...")
-print(m4a_with_artwork.is_file())
-print(m4a_with_artwork.get_artist())
-print(m4a_with_artwork.get_album())
+# print(m4a_with_artwork.is_file())
+# print(m4a_with_artwork.get_artist())
+# print(m4a_with_artwork.get_album())
 print(m4a_with_artwork.create_search_term())
-print(m4a_with_artwork.get_file_type())
 print("############")
 print(m4a_with_artwork.has_album_artwork())
-print(m4a_with_artwork.pict_test())
+# print(m4a_with_artwork.pict_test())
+print("############")
+
 
 # M4A without artwork testing
 print("Testing an M4A without artwork...")
-print(m4a_without_artwork.is_file())
-print(m4a_without_artwork.get_artist())
-print(m4a_without_artwork.get_album())
+# print(m4a_without_artwork.is_file())
+# print(m4a_without_artwork.get_artist())
+# print(m4a_without_artwork.get_album())
 print(m4a_without_artwork.create_search_term())
-print(m4a_without_artwork.get_file_type())
 print("############")
 print(m4a_without_artwork.has_album_artwork())
-print(m4a_without_artwork.pict_test())
+# print(m4a_without_artwork.pict_test())

@@ -1,10 +1,7 @@
 from song import Song
 from mutagen import File
-from mutagen.id3 import ID3, APIC, error
+from mutagen.id3 import ID3, APIC
 from mutagen.mp3 import MP3
-from pathlib import Path
-from os import path
-
 
 # What verbs/methods are specific to MP3s?
 # detecting album artwork
@@ -12,24 +9,16 @@ from os import path
 
 
 class MP3Song(Song):
+    """
+    Docstring needed
+    """
 
     def __init__(self, file_path_to_song):
         super().__init__(file_path_to_song)
         # self.file_path_to_song = file_path_to_song
 
-    def pict_test(self):
-        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
-        try:
-            x = self.file_path_to_song.pictures
-            if x:
-                return True
-        except Exception:
-            pass
-            if 'covr' in self.file_path_to_song or 'APIC:' in self.file_path_to_song:
-                return True
-            return False
-
     def has_album_artwork(self):
+        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
         """
         Takes in a file path to a song and returns a boolean to determine whether or not the file already has album artwork associated with it.
 
@@ -40,13 +29,19 @@ class MP3Song(Song):
         :rtype:  `boolean`.
         """
         try:
-            mp3 = MP3(self.file_path_to_song, ID3=ID3)
-            tags = mp3.tags
-            tags['covr']
-            # print("MP3 track has album artwork")
-            return True
+            x = self.file_path_to_song.pictures
+            if x:
+                return True
+        except Exception:
+            pass
+        try:
+            mp3_object = MP3(self.file_path_to_song, ID3=ID3)
+            mp3_file = File(self.file_path_to_song)
+            if 'covr' in mp3_object or 'APIC:' in mp3_object:
+                return True
+            elif 'covr' in mp3_file or 'APIC:' in mp3_file:
+                return True
         except KeyError:
-            # print("MP3 track needs album artwork")
             return False
 
     def embed_album_artwork(self, file_path_to_image):
@@ -80,27 +75,3 @@ class MP3Song(Song):
         except Exception:
             # print("Artwork was not added.")
             return False
-
-
-# mutagen can automatically detect format and type of tags
-file = File("/Users/mgermaine93/Desktop/test-music-folder/2-10 Granny.mp3")
-# artwork = file.tags['APIC:'].data  # access APIC frame and grab the image
-# with open('image.jpg', 'wb') as img:
-#     # img.write(artwork)  # write artwork to new image
-#     print(img.read())
-
-
-def pict_test(audio):
-    # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
-    try:
-        x = audio.pictures
-        if x:
-            return True
-    except Exception:
-        pass
-        if 'covr' in audio or 'APIC:' in audio:
-            return True
-        return False
-
-
-# print(pict_test(file))

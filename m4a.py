@@ -1,5 +1,7 @@
 from song import Song
 from mutagen.mp4 import MP4, MP4Cover
+from mutagen import File
+
 
 # What verbs/methods are specific to M4As?
 # detecting album artwork
@@ -7,24 +9,16 @@ from mutagen.mp4 import MP4, MP4Cover
 
 
 class M4ASong(Song):
+    """
+    Docstring needed
+    """
 
     def __init__(self, file_path_to_song):
         super().__init__(file_path_to_song)
         # self.file_path_to_song = file_path_to_song
 
-    def pict_test(self):
-        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
-        try:
-            x = self.file_path_to_song.pictures
-            if x:
-                return True
-        except Exception:
-            pass
-            if 'covr' in self.file_path_to_song or 'APIC:' in self.file_path_to_song:
-                return True
-            return False
-
     def has_album_artwork(self):
+        # https://stackoverflow.com/questions/7275710/mutagen-how-to-detect-and-embed-album-art-in-mp3-flac-and-mp4
         """
         Takes in a file path to a song and returns a boolean to determine whether or not the file already has album artwork associated with it.
 
@@ -35,14 +29,19 @@ class M4ASong(Song):
         :rtype:  `boolean`.
         """
         try:
-            m4a = MP4(self.file_path_to_song)
-            tags = m4a.tags
-            # print(tags)
-            tags['covr']
-            # print("M4a track has album artwork")
-            return True
+            x = self.file_path_to_song.pictures
+            if x:
+                return True
+        except Exception:
+            pass
+        try:
+            m4a_object = MP4(self.file_path_to_song)
+            m4a_file = File(self.file_path_to_song)
+            if 'covr' in m4a_object or 'APIC:' in m4a_object:
+                return True
+            elif 'covr' in m4a_file or 'APIC:' in m4a_file:
+                return True
         except KeyError:
-            # print("M4A track needs album artwork")
             return False
 
     def embed_album_artwork(self, file_path_to_image):
