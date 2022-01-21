@@ -14,54 +14,87 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+
+        # Main Window
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(606, 372)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        # Progress Bar
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setGeometry(QtCore.QRect(67, 290, 491, 23))
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
+
+        # File Explorer
         self.file_explorer_button = QtWidgets.QPushButton(self.centralwidget)
         self.file_explorer_button.setGeometry(QtCore.QRect(160, 170, 261, 41))
         self.file_explorer_button.setObjectName("file_explorer_button")
+
+        # Text Browser
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(40, 10, 531, 141))
         self.textBrowser.setObjectName("textBrowser")
+
+        # Run Program
         self.run_program_button = QtWidgets.QPushButton(self.centralwidget)
         self.run_program_button.setGeometry(QtCore.QRect(210, 230, 171, 41))
         self.run_program_button.setAutoFillBackground(False)
         self.run_program_button.setObjectName("run_program_button")
+
         MainWindow.setCentralWidget(self.centralwidget)
+
+        # Main Menu Bar (seen at the very top of the screen)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 606, 22))
         self.menubar.setObjectName("menubar")
+
+        # File Option
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
+
+        # Edit Option
         self.menuEdit = QtWidgets.QMenu(self.menubar)
         self.menuEdit.setObjectName("menuEdit")
+
+        # About Option
         self.menuAbout = QtWidgets.QMenu(self.menubar)
         self.menuAbout.setObjectName("menuAbout")
+
         MainWindow.setMenuBar(self.menubar)
+
+        # Status Bar
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
+
         MainWindow.setStatusBar(self.statusbar)
-        self.actionNew = QtWidgets.QAction(MainWindow)
-        self.actionNew.setObjectName("actionNew")
-        self.actionSave = QtWidgets.QAction(MainWindow)
-        self.actionSave.setObjectName("actionSave")
+
+        # File > New Option
         self.actionNew_2 = QtWidgets.QAction(MainWindow)
         self.actionNew_2.setObjectName("actionNew_2")
+
+        # File > Save Option
         self.actionSave_2 = QtWidgets.QAction(MainWindow)
         self.actionSave_2.setObjectName("actionSave_2")
+
+        # Edit > Cut Option
         self.actionCut = QtWidgets.QAction(MainWindow)
         self.actionCut.setObjectName("actionCut")
+
+        # Edit > Copy Option
         self.actionCopy = QtWidgets.QAction(MainWindow)
         self.actionCopy.setObjectName("actionCopy")
+
+        # Edit > Paste Option
         self.actionPaste = QtWidgets.QAction(MainWindow)
         self.actionPaste.setObjectName("actionPaste")
+
+        # About Option
         self.actionAbout_this_Tool = QtWidgets.QAction(MainWindow)
         self.actionAbout_this_Tool.setObjectName("actionAbout_this_Tool")
+
+        # Adds all the options to the menu
         self.menuFile.addAction(self.actionNew_2)
         self.menuFile.addAction(self.actionSave_2)
         self.menuEdit.addAction(self.actionCut)
@@ -75,8 +108,11 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.actionNew.triggered.connect(
+        # This dictates what occurs when each button is clicked
+        self.actionNew_2.triggered.connect(
             lambda: self.clicked("New was clicked!"))
+        self.actionSave_2.triggered.connect(
+            lambda: self.clicked("Save was clicked!"))
         self.actionCut.triggered.connect(
             lambda: self.clicked("Cut was clicked!"))
         self.actionCopy.triggered.connect(
@@ -104,32 +140,49 @@ class Ui_MainWindow(object):
                                             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Note:  Can only get artwork for MP3 and M4A/MP4 files for now.</p></body></html>"))
         self.run_program_button.setText(
             _translate("MainWindow", "Find Album Artwork"))
+
+        # Menu Options
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))
-        self.actionNew.setText(_translate("MainWindow", "New"))
-        self.actionSave.setText(_translate("MainWindow", "Save"))
+
+        # New
+        self.actionNew_2.setText(_translate("MainWindow", "New"))
+        self.actionNew_2.setStatusTip(_translate(
+            "MainWindow", "Create a New File"))
+        self.actionNew_2.setShortcut(_translate("MainWindow", "Ctrl+N"))
         # self.actionNew_2.setText(_translate("MainWindow", "New"))
-        self.actionNew.setStatusTip(
-            _translate("MainWindow", "Create a New File"))
-        self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N"))
+
+        # Save
+        self.actionSave_2.setText(_translate("MainWindow", "Save"))
+        self.actionSave_2.setStatusTip(_translate("MainWindow", "Save a File"))
+        self.actionSave_2.setShortcut(_translate("MainWindow", "Ctrl+S"))
         # self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionSave.setStatusTip(_translate("MainWindow", "Save a File"))
-        self.actionSave.setShortcut(_translate("MainWindow", "Ctrl+S"))
+
+        # Cut
         self.actionCut.setText(_translate("MainWindow", "Cut"))
         self.actionCut.setStatusTip(_translate("MainWindow", "Cut a file"))
         self.actionCut.setShortcut(_translate("MainWindow", "Ctrl+X"))
+
+        # Copy
         self.actionCopy.setText(_translate("MainWindow", "Copy"))
         self.actionCopy.setStatusTip(_translate("MainWindow", "Copy a File"))
         self.actionCopy.setShortcut(_translate("MainWindow", "Ctrl+C"))
+
+        # Paste
         self.actionPaste.setText(_translate("MainWindow", "Paste"))
         self.actionPaste.setStatusTip(_translate("MainWindow", "Paste a File"))
         self.actionPaste.setShortcut(_translate("MainWindow", "Ctrl+V"))
+
+        # About
         self.actionAbout_this_Tool.setText(
             _translate("MainWindow", "About this Tool"))
         self.actionAbout_this_Tool.setStatusTip(
             _translate("MainWindow", "About this Tool"))
+        self.actionAbout_this_Tool.setShortcut(
+            _translate("MainWindow", "Ctrl+?"))
 
+    # Helper function used above when buttons are clicked
     def clicked(self, text):
         self.run_program_button.setText(text)
         self.run_program_button.adjustSize()
