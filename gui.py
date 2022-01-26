@@ -182,10 +182,26 @@ class Ui_MainWindow(object):
         self.actionAbout_this_Tool.setShortcut(
             _translate("MainWindow", "Ctrl+?"))
 
+        # File Explorer Button
+        self.file_explorer_button.clicked.connect(self.pushButton_handler)
+
     # Helper function used above when buttons are clicked
     def clicked(self, text):
         self.run_program_button.setText(text)
         self.run_program_button.adjustSize()
+
+    def pushButton_handler(self):
+        print("Button has been pressed!")
+        self.open_folder_dialog_box()
+
+    def open_folder_dialog_box(self):
+        folder_name = QtWidgets.QFileDialog.getExistingDirectory()
+        print(folder_name)
+
+    def open_file_dialog_box(self):
+        file_name = QtWidgets.QFileDialog.getOpenFileName()
+        path = file_name[0]
+        print(path)
 
 
 if __name__ == "__main__":
