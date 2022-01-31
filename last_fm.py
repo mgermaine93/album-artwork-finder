@@ -22,9 +22,12 @@ def get_artwork_with_last_fm(artist, album, api_key=API_KEY, api_secret=API_SECR
         api_secret=api_secret,
     )
 
-    album_data = network.get_album(artist, album)
-    image_url = album_data.get_cover_image()
-    return image_url
+    try:
+        album_data = network.get_album(artist, album)
+        image_url = album_data.get_cover_image()
+        return image_url
+    except Exception:
+        return False
 
 
 # print(get_artwork_through_last_fm(artist="Sylvan Esso", album="Sylvan Esso"))
