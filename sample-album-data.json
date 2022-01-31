@@ -1,0 +1,30 @@
+{
+  "id": "33a6f699-e921-4ab6-80bb-de1186893f81",
+  "title": "Coffee",
+  "status": "Official",
+  "quality": "normal",
+  "text-representation": {
+    "language": "eng"
+  },
+  "date": "2014-03-24",
+  "country": "XW",
+  "release-event-list": [
+    {
+      "date": "2014-03-24",
+      "area": {
+        "id": "525d4e18-3d00-31b9-a58b-a146a916de8f",
+        "name": "[Worldwide]",
+        "sort-name": "[Worldwide]",
+        "iso-3166-1-code-list": ["XW"]
+      }
+    }
+  ],
+  "release-event-count": 1,
+  "barcode": "5051083079471",
+  "cover-art-archive": {
+    "artwork": "true",
+    "count": "1",
+    "front": "true",
+    "back": "false"
+  }
+}

@@ -3,6 +3,9 @@ import musicbrainzngs
 import os
 from dotenv import load_dotenv
 
+# https://python-musicbrainzngs.readthedocs.io/en/v0.7.1/api/?highlight=browse_artists#cover-art
+# https://python-musicbrainzngs.readthedocs.io/en/v0.7.1/usage/#more-examples
+
 load_dotenv()
 
 EMAIL = os.getenv("PERSONAL_EMAIL")
@@ -17,19 +20,47 @@ user_agent = musicbrainzngs.set_useragent(
 
 
 def get_artist_id(artist):
+    """Retrieves an artist's unique identifier from the Musicbrainz database.
+
+    Args:
+        artist (str) : the artist (singer, band, soloist, etc.) for which you would like to retrieve data from.
+
+    Returns:
+        artist_id (str) : the unique id that corresponds to the artist, if found in the Musicbrainz database.
+        (If no idea is found, then the boolean value "False" is returned)
+    """
     results = musicbrainzngs.search_artists(artist=artist, limit=5)
     for artist_info_set in results['artist-list']:
         if artist_info_set['name'].lower() == artist.lower():
-            return artist_info_set['id']
+            artist_id = artist_info_set['id']
+            return artist_id
         else:
-            return "Not found"
+            return False
 
 
-def get_releases_by_artist(artist):
+def has_musicbrainz_artwork(album_data):
+    """Determines whether or not an album has artwork in the Musicbrainz database.
+
+    Args:
+        album_data (dict/json) : a dict containing information about an album as it is returned from the Musicbrainz database.
+
+    Returns:
+        "True" if an album has album artwork in the Musicbrainz database.
+        "False" if an album does not have album artwork in the Musicbrainz database.
+    """
+    if album_data["cover-art-archive"]["front"] == "true":
+        return True
+    else:
+        return False
+
+
+def get_releases_with_artwork_by_artist(artist):
+    """
+    Docstring needed.
+    """
     titles_and_ids_dict = {}
-    artist_id = get_artist_id(artist)
     releases = musicbrainzngs.browse_releases(
-        artist=artist_id,
+        artist=get_artist_id(artist),
         # limit=30,
         # release_type=['album', 'single', 'ep',
         #               'compilation', 'soundtrack', 'live'],
@@ -38,38 +69,30 @@ def get_releases_by_artist(artist):
         # release_status=musicbrainzngs.musicbrainz.VALID_RELEASE_STATUSES
     )
     for release in releases["release-list"]:
-        titles_and_ids_dict[release["title"].lower()] = release["id"]
-    return titles_and_ids_dict
+        if has_musicbrainz_artwork(release):
+            titles_and_ids_dict[release["title"].lower()] = release["id"]
+    if titles_and_ids_dict:
+        return titles_and_ids_dict
+    else:
+        return False
 
 
-def get_cover_art_with_musicbrainz(artist, album):
-    # artist_id = get_artist_id(artist)
-    album_id = get_releases_by_artist(artist)[album.lower()]
-    return musicbrainzngs.get_image_list(releaseid=album_id)
+def get_artwork_with_musicbrainz(artist, album):
+    """
+    Returns the binary image data of the frontal cover image of an album in the form of a str.
+    """
+    try:
+        album_id = get_releases_with_artwork_by_artist(artist)[album.lower()]
+        print(album_id)
+    except KeyError:
+        return f"{album} by {artist} was not available in the musicbrainz database."
+    # returns binary... not the best?
+    # return musicbrainzngs.get_image_front(releaseid=album_id)
+    # THIS below returns a url to the image, which I think I prefer
+    image_url = musicbrainzngs.get_image_list(releaseid=album_id)[
+        "images"][0]["image"]
+    return image_url
 
 
-#print(get_artist_id("Ben Folds"))
-print(get_releases_by_artist("Ben Folds"))
-print(get_cover_art_with_musicbrainz(
-    artist="Ben Folds", album="Rockin' the Suburbs"))
-
-# results = musicbrainzngs.get_artist_by_id(
-#     id="51b7f46f-6c0f-46f2-9496-08c9ec2624d4", includes=["recordings", "releases", "works"])
-# print(results)
-
-# image_list = musicbrainzngs.get_image_list(
-#     "7491bf54-68e7-452e-8b27-d9f73e085101")
-# print(image_list)
-
-# results = musicbrainzngs.search_artists(artist="ben folds")
-# print(results)
-
-
-# def find_cover_art(release_id):
-#     data = musicbrainzngs.get_cover_art_list(
-#         "46a48e90-819b-4bed-81fa-5ca8aa33fbf3")
-
-#     for image in data["images"]:
-#         if "Front" in image["types"] and image["approved"]:
-#             print "It's is an approved front image!" % image["thumbnails"]["large"]
-#             break
+# print(get_artwork_with_musicbrainz("John Coltrane", "Giant Steps"))
+# /Users/mgermaine93/Desktop/test-music-folder/01 Giant Steps.m4a

@@ -13,16 +13,18 @@ USER_AGENT = os.getenv("USER_AGENT")
 # }
 
 
-def get_artwork_through_last_fm(artist, album, api_key=API_KEY, api_secret=API_SECRET):
-
+def get_artwork_with_last_fm(artist, album, api_key=API_KEY, api_secret=API_SECRET):
+    """
+    Returns a link to the EXTRA LARGE image size.  Other sizes can be SIZE_LARGE, SIZE_MEDIUM, or SIZE_SMALL
+    """
     network = pylast.LastFMNetwork(
         api_key=api_key,
         api_secret=api_secret,
     )
 
     album_data = network.get_album(artist, album)
-    image = album_data.get_cover_image()
-    return image
+    image_url = album_data.get_cover_image()
+    return image_url
 
 
-print(get_artwork_through_last_fm("Dave Matthews Band", "Crash"))
+# print(get_artwork_through_last_fm(artist="Sylvan Esso", album="Sylvan Esso"))

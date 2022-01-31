@@ -2,7 +2,11 @@ from song import Song
 from mutagen import File
 from mutagen.id3 import ID3, APIC
 from mutagen.mp3 import MP3
-
+from PIL import Image
+import urllib
+import os
+import shutil
+import requests
 # What verbs/methods are specific to MP3s?
 # detecting album artwork
 # embedding album artwork
@@ -43,6 +47,21 @@ class MP3Song(Song):
                 return True
         except KeyError:
             return False
+
+    def embed_album_url_artwork(self, url_to_artwork):
+        mp3_object = MP3(self.file_path_to_song, ID3=ID3)
+        response = requests.get(url_to_artwork, stream=True)
+        with open('img.png', 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
+
+    def embed_album_binary(self, binary_to_artwork):
+        result_file = 'result_file'
+        with open(result_file, 'wb') as file_handler:
+            file_handler.write(binary_to_artwork)
+        Image.open(result_file).save(result_file + '.png', 'PNG')
+        os.remove(result_file)
+        return f"{result_file}.png"
 
     def embed_album_artwork(self, file_path_to_image):
         """
