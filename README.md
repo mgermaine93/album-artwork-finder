@@ -19,3 +19,5 @@ Basic Artwork grabber is functional for now. Next big-picture steps/user stories
     - Access metadata to do this?
 - Develop minimalist front-end component?
   - Drag-and-drop feature?
+
+## Test for commit message
